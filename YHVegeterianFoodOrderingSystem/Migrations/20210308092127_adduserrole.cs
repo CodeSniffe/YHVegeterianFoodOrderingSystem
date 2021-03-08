@@ -7,7 +7,7 @@ namespace YHVegeterianFoodOrderingSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "userrole",
+                name: "Role",
                 table: "AspNetUsers",
                 nullable: true);
         }
@@ -15,7 +15,7 @@ namespace YHVegeterianFoodOrderingSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "userrole",
+                name: "Role",
                 table: "AspNetUsers");
         }
     }

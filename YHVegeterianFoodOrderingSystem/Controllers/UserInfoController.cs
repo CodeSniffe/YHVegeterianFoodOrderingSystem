@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YHVegeterianFoodOrderingSystem.Areas.Identity.Data;
+using YHVegeterianFoodOrderingSystem.Models;
 
 namespace YHVegeterianFoodOrderingSystem.Controllers
 {
@@ -18,9 +19,42 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             userManager = usrManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string msg = null)
         {
+            ViewBag.msg = msg;
             return View(userManager.Users);
+        }
+
+        public IActionResult registerUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> registerUser(register user)
+        {
+            if(ModelState.IsValid)
+            {
+                YHVegeterianFoodOrderingSystemUser webUser = new YHVegeterianFoodOrderingSystemUser
+                {
+                    Email = user.Email,
+                    DOB = user.DOB,
+                    FullName = user.FullName,
+                    PhoneNumber = user.PhoneNumber,
+                    Role = user.Role,
+                    EmailConfirmed = true
+                };
+
+                IdentityResult result = await userManager.CreateAsync(webUser, user.Password);
+                if (result.Succeeded)
+                    return RedirectToAction("Index", "UserInfo");
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                        ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(user);
         }
 
         public async Task<ActionResult> Update(string id)
@@ -30,11 +64,11 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             Boolean b = false;
             Boolean c = false;
             
-            if(user.userrole == "Staff")
+            if(user.Role == "Staff")
             {
                 a = true;
             }
-            else if(user.userrole == "Customer")
+            else if(user.Role == "Customer")
             {
                 b = true;
             }
@@ -59,15 +93,14 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(string id, string email, DateTime dob, String address, string userrole)
+        public async Task<IActionResult> Update(string id, string email, DateTime dob, string role)
         {
             YHVegeterianFoodOrderingSystemUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 user.Email = email;
                 user.DOB = dob;
-                user.Address = address;
-                user.userrole = userrole;
+                user.Role = role;
 
                 IdentityResult result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
@@ -78,6 +111,21 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             else
                 ModelState.AddModelError("", "User Not Found");
             return View(user);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            YHVegeterianFoodOrderingSystemUser user = await userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                await userManager.DeleteAsync(user);
+            }
+            else
+            {
+                return RedirectToAction("Index", "UserInfo", new { msg = "Unable to delete user" });
+            }
+            return RedirectToAction("Index", "UserInfo", new { msg = "User deleted!" });
         }
     }
 }

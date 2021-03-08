@@ -41,7 +41,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
         public SelectList RoleSelectionList = new SelectList( //DROPDOWN LIST TO SELECT ROLES
             new List<SelectListItem>
             {
-                  new SelectListItem {Selected = true, Text= "Select Role", Value=""},
+                new SelectListItem {Selected = true, Text= "Select Role", Value=""},
                 new SelectListItem {Selected = true, Text= "Customer", Value="Customer"},
                 new SelectListItem {Selected = true, Text= "Staff", Value="Staff"},
             }, "Value", "Text", 1);
@@ -55,42 +55,43 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage ="Please Insert Your Full Name.")]
+            [Required(ErrorMessage ="Full name is required.")]
+            [DataType(DataType.Text)]
             [Display(Name = "Fullname")]
             [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
             public string FullName { get; set; }
             
-            [Required]
+            [Required(ErrorMessage ="Email address is required.")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Password is required.")]
+            [StringLength(20, ErrorMessage = "The password must be at least 6 and at max 20 characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Confirm password is required.")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Date of birth is required.")]
             [DataType(DataType.Date)]
             [Display(Name = "Date Of Birth")]
             public DateTime DOB { get; set; }
 
-            [Required]
-            [StringLength(10, ErrorMessage = "The phone number should be in 10 number.", MinimumLength = 10)]
+            [Required(ErrorMessage = "Phone number is required.")]
+            [StringLength(10, ErrorMessage = "The phone number should be 10 numbers.", MinimumLength = 10)]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Role is required.")]
             [Display(Name ="What is your role?")]
-            public string userroles { get;set; }
+            public string Role { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -111,7 +112,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
                     FullName = Input.FullName,
                     PhoneNumber = Input.PhoneNumber,
                     DOB = Input.DOB,
-                    userrole = Input.userroles
+                    Role = Input.Role
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

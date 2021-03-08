@@ -83,7 +83,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var users = from m in _userManager.Users
                             where m.Email.Equals(Input.Email)
-                            select m.userrole;
+                            select m.Role;
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

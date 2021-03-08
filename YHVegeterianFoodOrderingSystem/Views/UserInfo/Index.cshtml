@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<YHVegeterianFoodOrderingSystem.Areas.Identity.Data.YHVegeterianFoodOrderingSystemUser>
 
 <h1 class=" bg-info text-white">All Users</h1>
-<a asp-action="create" class="btn btn-secondary">Create a User</a>
+<a asp-action="registerUser" class="btn btn-secondary">Create a User</a>
+
+@if(ViewBag.msg != null)
+{
+    <script>alert("@ViewBag.msg");</script>
+}
 
 <table class="table table-sm table-borded">
     <tr>
@@ -12,14 +17,17 @@
     </tr>
     @foreach (YHVegeterianFoodOrderingSystem.Areas.Identity.Data.YHVegeterianFoodOrderingSystemUser user in Model)
     {
-        <tr>
-            <td>@user.Id</td>
-            <td>@user.FullName</td>
-            <td>@user.Email</td>
-            <td>@user.DOB</td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">Update</a>
-            </td>
-        </tr>
+<tr>
+    <td>@user.Id</td>
+    <td>@user.FullName</td>
+    <td>@user.Email</td>
+    <td>@user.DOB</td>
+    <td>
+        <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">Update</a>
+    </td>
+    <td>
+        <a class="btn btn-sm btn-primary" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+    </td>
+</tr>
     }
 </table>
