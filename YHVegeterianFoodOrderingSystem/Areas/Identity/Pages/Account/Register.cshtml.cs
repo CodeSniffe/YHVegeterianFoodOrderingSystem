@@ -69,7 +69,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [DataType(DataType.DateTime)]
+            [DataType(DataType.Date)]
             [Display(Name = "Date Of Birth")]
             public DateTime DOB { get; set; }
 
