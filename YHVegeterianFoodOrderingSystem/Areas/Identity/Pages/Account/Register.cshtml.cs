@@ -50,7 +50,6 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [Display(Name = "Fullname")]
             [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
             public string FullName { get; set; }
-       
             
             [Required]
             [EmailAddress]
@@ -63,12 +62,22 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-     
+            [Required]
+            [DataType(DataType.DateTime)]
+            [Display(Name = "Date Of Birth")]
+            public DateTime DOB { get; set; }
+
+            [Required]
+            [StringLength(10, ErrorMessage = "The phone number should be in 10 number.", MinimumLength = 10)]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -83,7 +92,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new YHVegeterianFoodOrderingSystemUser { UserName = Input.Email, Email = Input.Email };
+                var user = new YHVegeterianFoodOrderingSystemUser { UserName = Input.Email, Email = Input.Email, FullName=Input.FullName,PhoneNumber=Input.PhoneNumber,DOB=Input.DOB};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
