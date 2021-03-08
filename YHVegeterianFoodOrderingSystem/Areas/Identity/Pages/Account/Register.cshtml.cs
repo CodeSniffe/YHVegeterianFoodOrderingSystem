@@ -58,6 +58,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [Required(ErrorMessage ="Full name is required.")]
             [DataType(DataType.Text)]
             [Display(Name = "Fullname")]
+            [RegularExpression("^[a-zA-Z ]+",ErrorMessage ="Letters Only!")]
             [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
             public string FullName { get; set; }
             
@@ -86,6 +87,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Phone number is required.")]
             [StringLength(10, ErrorMessage = "The phone number should be 10 numbers.", MinimumLength = 10)]
             [DataType(DataType.PhoneNumber)]
+            [RegularExpression("^[0-9]+", ErrorMessage = "Numbers Only!")]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
