@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using YHVegeterianFoodOrderingSystem.Areas.Identity.Data;
@@ -36,6 +37,14 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
+
+        public SelectList RoleSelectionList = new SelectList( //DROPDOWN LIST TO SELECT ROLES
+            new List<SelectListItem>
+            {
+                  new SelectListItem {Selected = true, Text= "Select Role", Value=""},
+                new SelectListItem {Selected = true, Text= "Customer", Value="Customer"},
+                new SelectListItem {Selected = true, Text= "Staff", Value="Staff"},
+            }, "Value", "Text", 1);
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -78,6 +87,10 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name ="What is your role?")]
+            public string userroles { get;set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -92,7 +105,14 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new YHVegeterianFoodOrderingSystemUser { UserName = Input.Email, Email = Input.Email, FullName=Input.FullName,PhoneNumber=Input.PhoneNumber,DOB=Input.DOB};
+                var user = new YHVegeterianFoodOrderingSystemUser {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FullName = Input.FullName,
+                    PhoneNumber = Input.PhoneNumber,
+                    DOB = Input.DOB,
+                    userrole = Input.userroles
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

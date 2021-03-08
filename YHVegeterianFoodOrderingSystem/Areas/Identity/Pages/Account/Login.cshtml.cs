@@ -81,9 +81,21 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var users = from m in _userManager.Users
+                            where m.Email.Equals(Input.Email)
+                            select m.userrole;
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    foreach(string userrole in users)
+                    {
+                        if (string.IsNullOrEmpty(userrole))
+                            return RedirectToAction("Privacy", "Home");
+                        else if (userrole.Equals("Staff"))
+                            return RedirectToAction("Index", "UserInfo");
+                        else
+                            return RedirectToAction("Index", "Menu");
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
