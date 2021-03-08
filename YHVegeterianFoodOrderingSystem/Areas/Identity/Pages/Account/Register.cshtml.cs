@@ -46,6 +46,12 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required(ErrorMessage ="Please Insert Your Full Name.")]
+            [Display(Name = "Fullname")]
+            [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
+            public string FullName { get; set; }
+       
+            
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -61,6 +67,8 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+     
         }
 
         public async Task OnGetAsync(string returnUrl = null)

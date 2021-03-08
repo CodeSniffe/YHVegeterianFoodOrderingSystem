@@ -36,6 +36,21 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full name")]
+            public string FullName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Birth Date")]
+            public DateTime DOB { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
         }
 
         private async Task LoadAsync(YHVegeterianFoodOrderingSystemUser user)
@@ -47,7 +62,11 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FullName = user.FullName,
+                Address = user.Address,
+                DOB = user.DOB
+
             };
         }
 
@@ -87,6 +106,22 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (Input.FullName != user.FullName)
+            {
+                user.FullName = Input.FullName;
+            }
+
+            if (Input.DOB != user.DOB)
+            {
+                user.DOB = Input.DOB;
+            }
+
+            if (Input.Address != user.Address)
+            {
+                user.Address = Input.Address;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
