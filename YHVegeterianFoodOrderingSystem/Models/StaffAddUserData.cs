@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YHVegeterianFoodOrderingSystem.Models
 {
-    public class register
+    public class StaffAddUserData
     {
         [Required(ErrorMessage = "Full name is required.")]
         [Display(Name = "Fullname")]

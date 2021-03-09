@@ -31,7 +31,7 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> registerUser(register user)
+        public async Task<IActionResult> registerUser(StaffAddUserData user)
         {
             if(ModelState.IsValid)
             {
@@ -93,14 +93,15 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(string id, string email, DateTime dob, string role)
+        public async Task<IActionResult> Update(string id, string fullname, DateTime dob, string role,string email)
         {
             YHVegeterianFoodOrderingSystemUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                user.Email = email;
+                user.FullName = fullname;
                 user.DOB = dob;
                 user.Role = role;
+                user.Email = email;
 
                 IdentityResult result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
