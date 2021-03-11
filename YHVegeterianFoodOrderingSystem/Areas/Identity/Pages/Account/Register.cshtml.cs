@@ -57,7 +57,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
         {
             [Required(ErrorMessage ="Full name is required.")]
             [DataType(DataType.Text)]
-            [Display(Name = "Fullname")]
+            [Display(Name = "Full Name")]
             [RegularExpression("^[a-zA-Z ]+",ErrorMessage ="Letters Only!")]
             [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
             public string FullName { get; set; }
@@ -75,7 +75,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Confirm password is required.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 

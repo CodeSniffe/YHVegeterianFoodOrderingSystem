@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YHVegeterianFoodOrderingSystem.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace YHVegeterianFoodOrderingSystem
 {
@@ -30,6 +31,13 @@ namespace YHVegeterianFoodOrderingSystem
 
             services.AddDbContext<YHVegeterianFoodOrderingSystemContextNew>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("YHVegeterianFoodOrderingSystemContextNew")));
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                //Default user settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-. @+/ ";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
