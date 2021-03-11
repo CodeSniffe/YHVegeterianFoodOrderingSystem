@@ -37,6 +37,7 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             {
                 YHVegeterianFoodOrderingSystemUser webUser = new YHVegeterianFoodOrderingSystemUser
                 {
+                    UserName = user.FullName,
                     Email = user.Email,
                     DOB = user.DOB,
                     FullName = user.FullName,
