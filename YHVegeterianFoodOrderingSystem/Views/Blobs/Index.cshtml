@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "CreateBlobContainer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create Blob Container</h1>
+
+<p>
+    The @ViewBag.BlobContainerName is created!!
+    @(ViewBag.Success == true?"Succeeded!!":"Failed! Container already existed.")
+</p>

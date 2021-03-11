@@ -11,6 +11,15 @@
     "mssql3": {
       "type": "mssql.local",
       "connectionId": "YHVegeterianFoodOrderingSystemNewContext"
+    },
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "storage1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/yhblob",
+      "type": "storage.azure",
+      "connectionId": "yhblob",
+      "secretStore": "LocalSecretsFile"
     }
   }
 }

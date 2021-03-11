@@ -15,7 +15,7 @@ namespace YHVegeterianFoodOrderingSystem.Models
         public string Quantity { get; set; }
         
         [Required(ErrorMessage = "Price is required!")]
-        [RegularExpression("^[0-9]+", ErrorMessage = "Numbers Only!")]
+        [RegularExpression("^[1-9]\\d{0,7}(?:\\.\\d{1,4})?$", ErrorMessage = "Numbers Only!")]
         [Column(TypeName = "decimal(18,2)")]
         [Range(1, 100, ErrorMessage = "Price should be in 1 ~ 100.")]
         [DataType(DataType.Currency)]
