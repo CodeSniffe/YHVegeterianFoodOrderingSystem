@@ -7,23 +7,18 @@ using System.Threading.Tasks;
 
 namespace YHVegeterianFoodOrderingSystem.Models
 {
-    public class Menu
+    public class PurchaseHistory
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Food name is required!")]
-        [RegularExpression("^[a-zA-Z ]+", ErrorMessage = "Letters Only!")]
-        [Display(Name = "Food Name")]
-        [StringLength(60, ErrorMessage = "The name should be between 3 - 60chars!", MinimumLength = 3)]
-        public string FoodName { get; set; }
-
+        public string CustomerName { get; set; }
+        public string PurchasedFood { get; set; }
+        public string Quantity { get; set; }
+        
         [Required(ErrorMessage = "Price is required!")]
         [RegularExpression("^[0-9]+", ErrorMessage = "Numbers Only!")]
         [Column(TypeName = "decimal(18,2)")]
         [Range(1, 100, ErrorMessage = "Price should be in 1 ~ 100.")]
         [DataType(DataType.Currency)]
-        public decimal Price { get; set; }
-
-        public String FoodImagePath { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

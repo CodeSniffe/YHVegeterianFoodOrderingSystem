@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using YHVegeterianFoodOrderingSystem.Data;
 using YHVegeterianFoodOrderingSystem.Models;
 
-namespace YHVegeterianFoodOrderingSystem.Views.Menus
+namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
 {
-    public class MenusController : Controller
+    public class PurchaseHistoriesController : Controller
     {
         private readonly YHVegeterianFoodOrderingSystemContextNew _context;
 
-        public MenusController(YHVegeterianFoodOrderingSystemContextNew context)
+        public PurchaseHistoriesController(YHVegeterianFoodOrderingSystemContextNew context)
         {
             _context = context;
         }
 
-        // GET: Menus
+        // GET: PurchaseHistories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Menu.ToListAsync());
+            return View(await _context.PurchaseHistory.ToListAsync());
         }
 
-        // GET: Menus/Details/5
+        // GET: PurchaseHistories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace YHVegeterianFoodOrderingSystem.Views.Menus
                 return NotFound();
             }
 
-            var menu = await _context.Menu
+            var purchaseHistory = await _context.PurchaseHistory
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (menu == null)
+            if (purchaseHistory == null)
             {
                 return NotFound();
             }
 
-            return View(menu);
+            return View(purchaseHistory);
         }
 
-        // GET: Menus/Create
+        // GET: PurchaseHistories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Menus/Create
+        // POST: PurchaseHistories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FoodName,Price,FoodImagePath")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,CustomerName,PurchasedFood,Quantity,TotalPrice")] PurchaseHistory purchaseHistory)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(menu);
+                _context.Add(purchaseHistory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(menu);
+            return View(purchaseHistory);
         }
 
-        // GET: Menus/Edit/5
+        // GET: PurchaseHistories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace YHVegeterianFoodOrderingSystem.Views.Menus
                 return NotFound();
             }
 
-            var menu = await _context.Menu.FindAsync(id);
-            if (menu == null)
+            var purchaseHistory = await _context.PurchaseHistory.FindAsync(id);
+            if (purchaseHistory == null)
             {
                 return NotFound();
             }
-            return View(menu);
+            return View(purchaseHistory);
         }
 
-        // POST: Menus/Edit/5
+        // POST: PurchaseHistories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FoodName,Price,FoodImagePath")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,PurchasedFood,Quantity,TotalPrice")] PurchaseHistory purchaseHistory)
         {
-            if (id != menu.Id)
+            if (id != purchaseHistory.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace YHVegeterianFoodOrderingSystem.Views.Menus
             {
                 try
                 {
-                    _context.Update(menu);
+                    _context.Update(purchaseHistory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MenuExists(menu.Id))
+                    if (!PurchaseHistoryExists(purchaseHistory.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace YHVegeterianFoodOrderingSystem.Views.Menus
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(menu);
+            return View(purchaseHistory);
         }
 
-        // GET: Menus/Delete/5
+        // GET: PurchaseHistories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace YHVegeterianFoodOrderingSystem.Views.Menus
                 return NotFound();
             }
 
-            var menu = await _context.Menu
+            var purchaseHistory = await _context.PurchaseHistory
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (menu == null)
+            if (purchaseHistory == null)
             {
                 return NotFound();
             }
 
-            return View(menu);
+            return View(purchaseHistory);
         }
 
-        // POST: Menus/Delete/5
+        // POST: PurchaseHistories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var menu = await _context.Menu.FindAsync(id);
-            _context.Menu.Remove(menu);
+            var purchaseHistory = await _context.PurchaseHistory.FindAsync(id);
+            _context.PurchaseHistory.Remove(purchaseHistory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MenuExists(int id)
+        private bool PurchaseHistoryExists(int id)
         {
-            return _context.Menu.Any(e => e.Id == id);
+            return _context.PurchaseHistory.Any(e => e.Id == id);
         }
     }
 }

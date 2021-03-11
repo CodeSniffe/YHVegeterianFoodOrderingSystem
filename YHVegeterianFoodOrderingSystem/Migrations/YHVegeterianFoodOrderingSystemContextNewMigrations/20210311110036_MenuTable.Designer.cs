@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YHVegeterianFoodOrderingSystem.Data;
 
 namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSystemContextNewMigrations
 {
     [DbContext(typeof(YHVegeterianFoodOrderingSystemContextNew))]
-    partial class YHVegeterianFoodOrderingSystemContextNewModelSnapshot : ModelSnapshot
+    [Migration("20210311110036_MenuTable")]
+    partial class MenuTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSyst
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FoodImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FoodName")
                         .IsRequired()
                         .HasColumnType("nvarchar(60)")
@@ -39,30 +38,6 @@ namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSyst
                     b.HasKey("Id");
 
                     b.ToTable("Menu");
-                });
-
-            modelBuilder.Entity("YHVegeterianFoodOrderingSystem.Models.PurchaseHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PurchasedFood")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quantity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseHistory");
                 });
 #pragma warning restore 612, 618
         }

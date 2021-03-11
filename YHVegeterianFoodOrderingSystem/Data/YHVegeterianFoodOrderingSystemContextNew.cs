@@ -15,5 +15,7 @@ namespace YHVegeterianFoodOrderingSystem.Data
         }
 
         public DbSet<YHVegeterianFoodOrderingSystem.Models.Menu> Menu { get; set; }
+
+        public DbSet<YHVegeterianFoodOrderingSystem.Models.PurchaseHistory> PurchaseHistory { get; set; }
     }
 }
