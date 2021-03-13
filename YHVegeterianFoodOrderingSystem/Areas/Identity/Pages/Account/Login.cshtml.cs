@@ -94,7 +94,7 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account
                         else if (userrole.Equals("Staff"))
                             return RedirectToAction("Index", "UserInfo");
                         else
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "ViewMenus");
                     }
                     return LocalRedirect(returnUrl);
                 }

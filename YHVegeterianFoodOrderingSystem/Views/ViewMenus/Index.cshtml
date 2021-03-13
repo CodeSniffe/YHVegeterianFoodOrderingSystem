@@ -1,0 +1,103 @@
+﻿@model IEnumerable<YHVegeterianFoodOrderingSystem.Models.Menu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Food Menu</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" id="MenuTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodImagePath)
+            </th>
+            <th>
+                Quantity (Max: 10)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodImagePath)
+            </td>
+            <td>
+                <input type="number" name="Quantity" value="0" min="0" max="10">
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<form asp-action="AddToCart" method="post">
+    <div class="form-group">
+        Food Name:
+        @Html.DropDownList("FoodName")  
+    </div>
+    <div class="form-group">
+        Unit Price:
+        <input type="text" readonly="readonly" name="UnitPrice" value=@ViewBag.UnitPrice />
+    </div>
+    <div class="form-group">
+        Quantity:
+        <input type="number" name="Quantity" value="0" min="0" max="10"/>
+    </div>
+    <div class="form-group">
+        Total:
+        <input type="text" readonly="readonly" name="Total" value="0.00" />
+    </div>
+    <div class="form-group">
+        <input type="button" name="AddToList" value="Add To List" />
+    </div>
+</form>
+
+<fieldset>
+    <legend>Restaurant List Items</legend>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th hidden>
+                    Food ID
+                </th>
+                <th>
+                    Food Name
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+    </table>
+</fieldset>
