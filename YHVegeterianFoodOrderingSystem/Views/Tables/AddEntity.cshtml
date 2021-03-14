@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "AddEntity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>AddEntity</h1>
+
+<p>
+    Insert single entity into table of @ViewBag.TableName is
+    @(ViewBag.Result==204?"Success":"Failed. Something went wrong...")
+</p>

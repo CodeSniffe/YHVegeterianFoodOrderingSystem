@@ -58,7 +58,7 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             }
             catch(Exception ex)
             {
-                return "Something is wrong...";
+                return "Something is wrong..."+ex.ToString();
             }
             uploadedfile = uploadedfile + name + " is uploaded successfully!";
             return uploadedfile;
@@ -82,11 +82,78 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return "Something is wrong...";
+                    return "Something is wrong..."+ex.ToString();
                 }
                 uploadedfile = uploadedfile + name + " is uploaded successfully!";
             }
             return uploadedfile;
+        }
+
+        public IActionResult ListItemsAsGallery()
+        {
+            CloudBlobContainer container = getBlobStorageInformation();
+            List<string> blobs = new List<string>(); //NEW LIST TO STORE BLOB INFO
+
+            //GET LISTING RECORD FROM BLOB STORAGE
+            BlobResultSegment result = container.ListBlobsSegmentedAsync(null).Result;
+
+            //READ BLOB FROM STORAGE
+            foreach (IListBlobItem item in result.Results)
+            {
+                //CHECK TYPE OF BLOB
+                if(item.GetType()==typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+                    blobs.Add(blob.Name + "#" + blob.Uri.ToString());
+                }
+                else if(item.GetType()==typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory blob = (CloudBlobDirectory)item;
+                    blobs.Add(blob.Uri.ToString());
+                }
+            }
+            return View(blobs);
+        }
+
+        //DOWNLOAD IMAGE
+        public string DownloadBlob(string area)
+        {
+            CloudBlobContainer container = getBlobStorageInformation();
+            CloudBlockBlob downloadedblob = container.GetBlockBlobReference(area);
+            try
+            {
+                using (var output = System.IO.File.OpenWrite(@"C:\\Users\\ASUS\\Downloads\\" + downloadedblob.Name))
+                {
+                    downloadedblob.DownloadToStreamAsync(output).Wait();
+                }                    
+            }
+            catch(Exception ex)
+            {
+                return "Error" + ex.ToString();
+            }
+            return downloadedblob.Name + "is already downloaded";
+        }
+
+        //DELETE IMAGE
+        public string DeleteBlob(string area)
+        {
+            CloudBlobContainer container = getBlobStorageInformation();
+            //GIVE A NEW BLOB NAME
+            CloudBlockBlob deletedblob = container.GetBlockBlobReference(area);
+
+            //DELETE ITEM
+            string name = deletedblob.Name;
+            var result = deletedblob.DeleteIfExistsAsync().Result;
+
+            if(result == true)
+            {
+                return "Item" + name + "is successfully deletd";
+            }
+            else
+            {
+                return "Item" + name + "is not able to delete";
+            }
+            
         }
     }
 }

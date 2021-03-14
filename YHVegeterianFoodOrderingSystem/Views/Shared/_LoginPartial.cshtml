@@ -23,7 +23,9 @@
 
             if (Role == "Customer")
             {
-
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Blobs" asp-action="ListItemsAsGallery">Gallery</a>
+                </li>
             }
             else
             {
@@ -36,6 +38,13 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="PurchaseHistories" asp-action="Index">View Purchase History</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables"asp-action="CreateTables">Create Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables" asp-action="AddEntity">Add Data to Table</a>
+                </li>
+
             }
         }
 

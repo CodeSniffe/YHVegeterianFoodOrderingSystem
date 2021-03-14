@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "ListItemsAsGallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Gallery</h1>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        string[] link = item.Split("#");
+        <li>
+            <img src="@link[1]" width="200px" height="200px"/>
+            <span style="color:red">@link[0]</span> | 
+            <a asp-area="@link[0]" asp-action="downloadblobs">Download</a> |
+            <a asp-area="@link[0]" asp-action="deleleblobs">Delete</a> |
+            <br /><br /><br />
+        </li>
+    }
+</ul>
