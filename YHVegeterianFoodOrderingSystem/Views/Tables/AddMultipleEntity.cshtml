@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Microsoft.WindowsAzure.Storage.Table.TableResult>
+@{
+    ViewData["Title"] = "AddMultipleEntity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add Multiple Entity</h1>
+@if (ViewBag.Msg != null)
+{
+    <script>alert("@ViewBag.msg");</script>
+    <p>No Insertion... Something Went Wrong...</p>
+}
+else
+{
+    <table border="1">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>HTTP Status Code</th>
+        </tr>
+        @foreach (var result in Model)
+        {
+            <tr>
+                @{var displayresult = result.Result as YHVegeterianFoodOrderingSystem.Models.CustomerEntity; }
+                <td>@displayresult.RowKey</td>
+                <td>@displayresult.PartitionKey</td
+                <td>@displayresult.Email</td>
+                <td>@displayresult.BirthDate</td>
+                <td>@result.HttpStatusCode</td>
+            </tr>
+        }
+    </table>
+}
+

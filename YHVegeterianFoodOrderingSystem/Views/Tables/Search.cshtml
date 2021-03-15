@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Search</h1>
+
+@if (ViewBag.msg !=null)
+{
+    <script>
+        alert("@ViewBag.msg");
+    </script>
+}
+
+<center>
+    <form method="post" action="GetEntity">
+        <p>Enter Family Name:<input type="text" value="" name="PartitionName" required/></p>
+        <p>Enter Given Name: <input type="text" value="" name="RowName" required/></p>
+        <p><input type="submit" value="Search Data" name="submit"/></p>
+    </form>
+</center>
+

@@ -20,5 +20,6 @@ namespace YHVegeterianFoodOrderingSystem.Models
         [Range(1, 100, ErrorMessage = "Price should be in 1 ~ 100.")]
         [DataType(DataType.Currency)]
         public decimal TotalPrice { get; set; }
+
     }
 }
