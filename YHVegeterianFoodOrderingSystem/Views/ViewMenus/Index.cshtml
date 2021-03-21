@@ -8,9 +8,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#btnAddToList").click(function () {
-            AddToList();
-        });
 
         $("input[type=number]").change(function () {
             CalculateSubTotal();
@@ -26,130 +23,48 @@
         $("#txtTotal").val(parseFloat(Total).toFixed(2));
     }
 
-    function RemoveItem(FoodID) {
-        $(FoodID).closest('tr').remove();
-    }
-
-    function AddToList() {
-        var tblItemList = $("#tblOrderItemList");
-        var CustomerName = $("#txtCustomerName").val();
-        var FoodID = $("#FoodDDL").val();
-        var FoodName = $("#FoodDDL option:selected").text();
-        var UnitPrice = $("#txtUnitPrice").val();       
-        var Quantity = $("#txtQuantity").val();
-        var Total = $("#txtTotal").val();
-        var ItemList = "<tr><td hidden>" +
-            FoodID +
-            "</td><td>" +
-            CustomerName +
-            "</td><td>" +
-            FoodName +
-            "</td><td>" +
-            parseFloat(UnitPrice).toFixed(2) +
-            "</td><td>" +
-            Quantity +
-            "</td><td>" +
-            parseFloat(Total).toFixed(2) +
-            "</td><td> <input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='RemoveItem(this)'/> </tr></tr>";
-
-        if ($("#txtCustomerName").val() == "") {
-            alert("Please enter your name first!");
-        }
-        else {
-            if ($("#txtTotal").val() == 0.00) {
-                alert("Please select at least one food!");
-            }
-            else {
-                tblItemList.append(ItemList);
-                FinalItemTotal();
-                ResetItem();
-            }
-        }
-    }
-
-    function FinalItemTotal() {
-        $("#txtFinalTotal").val("0.00");
-        var FinalTotal = 0.00;
-
-        $("#tblOrderItemList").find("tr:gt(0)").each(function () {
-            var Total = parseFloat($(this).find("td:eq(5)").text());
-            FinalTotal += Total;
-        });
-
-        $("#txtFinalTotal").val(parseFloat(FinalTotal).toFixed(2));
-    }
-
-    function ResetItem() {
-        $("#FoodID").val(0);
-        $("#txtQuantity").val(0);
-        $("#txtTotal").val(0.00);
-    }
 </script>
 
-<h1>Food Menu</h1>
+<h1 class="bg-info-text-white">Order Food</h1>
 
-<<<<<<< HEAD
-<style>
-    fieldset{
-        border: 1px solid #ddd !important;
-        margin: 0;
-        xmin-width: 0;
-        padding: 10px;
-        position: relative;
-        boder-radius: 4px;
-        background-color: #f5f5f5;
-        padding-left: 10px !important;
-    }
-=======
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
->>>>>>> 2c11178b1253c074026dedd5024b3ab5a02f6054
-
-    legend{
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 0px;
-        width: 35%;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 5px 5px 5px 10px;
-        background-color: #ffffff;
-    }
-</style>
-
-<fieldset>
-    <legend>
-        Personal Details
-    </legend>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                Customer Name:
-                <input asp-for="CustomerName" type="text" id="txtCustomerName" name="CustomerName" />
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                Total Payment:
-                <input style="text-align: right" type="text" value="0.00" name="FinalTotal" readonly="readonly" id="txtFinalTotal"/>
-            </div>
-        </div>
-    </div>
-</fieldset>
-<br />
-<fieldset>
-    <legend>
-        Food Details
-    </legend>
-    @using (Html.BeginForm("Create", "PurchaseHistory", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm("Index", "ViewMenus", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>
+            Personal Details
+        </legend>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    Food Name:
-                    @Html.DropDownList("FoodDDL", new SelectList(ViewBag.FoodName), new { @class = "form-group" })
+                    Customer Name:
+                    <input asp-for="CustomerName" type="text" id="txtCustomerName" name="CustomerName" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    Total Payment:
+                    <input style="text-align: right" type="text" value="0.00" name="FinalTotal" readonly="readonly" id="txtFinalTotal" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <fieldset>
+        <legend>
+            Food Details
+        </legend>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    Food:
+                    <select asp-for="PurchasedFood">
+                        <option value="Set A">Vegeterian Burger</option>
+                        <option value="Set B">Salad</option>
+                        <option value="Set C">Sandwich</option>
+                    </select>
+                    <!--Food Name:
+                    Html.DropDownList("FoodDDL", new SelectList(ViewBag.FoodName), new { class = "form-group" })-->
                 </div>
             </div>
             <div class="col-md-6">
@@ -182,37 +97,5 @@
                 </div>
             </div>
         </div>
-    }
-</fieldset>
-<br />
-<fieldset>
-    <legend>Order List Items</legend>
-    <table width="100%", id="tblOrderItemList">
-        <thead>
-            <tr>
-                <th hidden>
-                    Order ID
-                </th>
-                <th>
-                    Customer Name
-                </th>
-                <th>
-                    Food Name
-                </th>
-                <th>
-                    Unit Price
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th>
-                    Total
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </thead>
-    </table>
-</fieldset>
-<br />
+    </fieldset>
+}

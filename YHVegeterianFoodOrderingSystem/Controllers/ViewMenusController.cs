@@ -27,10 +27,48 @@ namespace YHVegeterianFoodOrderingSystem.Views.ViewMenu
                                            orderby m.FoodName
                                            select m.FoodName;
             List<string> foodName = new List<string>(await TypeQuery.Distinct().ToListAsync());
-            //IEnumerable<SelectListItem> foodName = new SelectList(await TypeQuery.Distinct().ToListAsync());
             ViewBag.FoodName = foodName;
 
             return View();
+        }
+
+        /*public IActionResult Index()
+        {
+            List<Menu> menus = (from food in this._context.Menu.Take(10)
+                                select food).ToList();
+            List<SelectListItem> FoodList = new List<SelectListItem>();
+            foreach(var m in menus)
+            {
+                FoodList.Add(new SelectListItem()
+                {
+                    Text = m.FoodName,
+                    Value = m.FoodName
+                });
+                ViewBag.FoodName = FoodList;
+            }
+            return View(new PurchaseHistory());
+        }*/
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(PurchaseHistory model)
+        {
+            if (ModelState.IsValid)
+            {
+                PurchaseHistory obj = new PurchaseHistory()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CustomerName = model.CustomerName,
+                    PurchasedFood = model.PurchasedFood,
+                    UnitPrice = model.UnitPrice,
+                    Quantity = model.Quantity,
+                    TotalPrice = model.TotalPrice
+                };
+                _context.PurchaseHistory.Add(obj);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "ViewMenus");
+            }
+            return View(model);
         }
     }
 }

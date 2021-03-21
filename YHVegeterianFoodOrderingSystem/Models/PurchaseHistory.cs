@@ -10,8 +10,19 @@ namespace YHVegeterianFoodOrderingSystem.Models
     public class PurchaseHistory
     {
         public string Id { get; set; }
+
+        [Required(ErrorMessage = "Full name is required.")]
+        [Display(Name = "Customer Name")]
+        [RegularExpression("^[a-zA-Z ]+", ErrorMessage = "Letters Only!")]
+        [StringLength(100, ErrorMessage = "Should be more than 6 chars and less than 100 chars", MinimumLength = 6)]
         public string CustomerName { get; set; }
         public string PurchasedFood { get; set; }
+        public string UnitPrice { get; set; }
+
+        [Required(ErrorMessage = "Quantity is required.")]
+        [RegularExpression("^[0-9]+", ErrorMessage = "Numbers Only!")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Quantity")]
         public string Quantity { get; set; }
         
         [Required(ErrorMessage = "Price is required!")]

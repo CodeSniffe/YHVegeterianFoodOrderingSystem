@@ -4,9 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>View Customer Purchase History</h1>
+<h1>Index</h1>
 
-<br />
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -15,6 +17,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PurchasedFood)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
@@ -35,12 +40,16 @@
                 @Html.DisplayFor(modelItem => item.PurchasedFood)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalPrice)
             </td>
             <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
