@@ -43,38 +43,18 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             return View(); 
         }
 
-        public string UploadBlob()
-        {
-            CloudBlobContainer container = getBlobStorageInformation(); //LINK ACC TO GET BLOB CONTAINER
-            string uploadedfile=""; string name = "";
-            try
-            {
-                CloudBlockBlob blob = container.GetBlockBlobReference("my bae.jpg"); //FILE NAME PUT HERE
-                using (var fileStream = System.IO.File.OpenRead(@"C:\\Users\\ASUS\\Pictures\\Saved Pictures\\my bae.jpg"))
-                {
-                    name = fileStream.Name;
-                    blob.UploadFromStreamAsync(fileStream).Wait();
-                }
-            }
-            catch(Exception ex)
-            {
-                return "Something is wrong..."+ex.ToString();
-            }
-            uploadedfile = uploadedfile + name + " is uploaded successfully!";
-            return uploadedfile;
-        }
-
+        //UPLOAD FILE
         public string UploadMultipleImages()
         {
             CloudBlobContainer container = getBlobStorageInformation(); //LINK ACC TO GET BLOB CONTAINER
 
             string uploadedfile = ""; string name = "";
-            for (int i = 0; i < 3; i++)
+            for (int i = 1; i < 6; i++)
             {
                 try
                 {
-                    CloudBlockBlob blob = container.GetBlockBlobReference("yhblob");
-                    using (var fileStream = System.IO.File.OpenRead(@"C:\\Users\\ASUS\\Pictures\\Saved Pictures\\my bae.jpg"))
+                    CloudBlockBlob blob = container.GetBlockBlobReference("ImageMenu"+ i +".jpg");
+                    using (var fileStream = System.IO.File.OpenRead(@"C:\\Users\\ASUS\\Desktop\\ImageMenu" + i + ".jpg"))
                     {
                         name = fileStream.Name;
                         blob.UploadFromStreamAsync(fileStream).Wait();
@@ -89,6 +69,7 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             return uploadedfile;
         }
 
+        //DISPLAY PICTURE FROM BLOB
         public IActionResult ListItemsAsGallery()
         {
             CloudBlobContainer container = getBlobStorageInformation();
@@ -134,26 +115,5 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             return downloadedblob.Name + "is already downloaded";
         }
 
-        //DELETE IMAGE
-        public string DeleteBlob(string area)
-        {
-            CloudBlobContainer container = getBlobStorageInformation();
-            //GIVE A NEW BLOB NAME
-            CloudBlockBlob deletedblob = container.GetBlockBlobReference(area);
-
-            //DELETE ITEM
-            string name = deletedblob.Name;
-            var result = deletedblob.DeleteIfExistsAsync().Result;
-
-            if(result == true)
-            {
-                return "Item" + name + "is successfully deletd";
-            }
-            else
-            {
-                return "Item" + name + "is not able to delete";
-            }
-            
-        }
     }
 }

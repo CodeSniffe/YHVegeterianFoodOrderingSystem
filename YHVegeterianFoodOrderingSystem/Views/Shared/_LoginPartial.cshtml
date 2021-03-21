@@ -24,7 +24,13 @@
             if (Role == "Customer")
             {
                 <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ViewMenus" asp-action="Index">Order Now</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Blobs" asp-action="ListItemsAsGallery">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="CustomerPurchaseHistory" asp-action="Index">View Purchase History</a>
                 </li>
             }
             else
@@ -39,16 +45,7 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="PurchaseHistories" asp-action="Index">View Purchase History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables" asp-action="CreateTables">Create Table</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables" asp-action="AddEntity">Add Data to Table</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables" asp-action="AddMultipleEntity">Add Multiple Data to Table</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tables" asp-action="Search">Search</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="MenuFiles" asp-action="Index">Upload Images</a>
                 </li>
             }
         }
