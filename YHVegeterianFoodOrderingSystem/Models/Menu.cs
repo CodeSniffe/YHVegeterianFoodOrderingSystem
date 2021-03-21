@@ -24,7 +24,5 @@ namespace YHVegeterianFoodOrderingSystem.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [Display(Name = "Food Image")]
-        public String FoodImagePath { get; set; }
     }
 }

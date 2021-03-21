@@ -43,6 +43,7 @@ namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
             return View(purchaseHistory);
         }
 
+<<<<<<< HEAD
         // GET: PurchaseHistories/Create
         public IActionResult Create()
         {
@@ -115,6 +116,8 @@ namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
             }
             return View(purchaseHistory);
         }
+=======
+>>>>>>> 2c11178b1253c074026dedd5024b3ab5a02f6054
 
         // GET: PurchaseHistories/Delete/5
         public async Task<IActionResult> Delete(string? id)

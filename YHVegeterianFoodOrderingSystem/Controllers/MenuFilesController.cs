@@ -25,23 +25,23 @@ namespace YHVegeterianFoodOrderingSystem.Controllers
             int i = 1;
             foreach (var formFile in files)
             {
-                if (formFile.ContentType.ToLower() != "text/plain") //not text file..
+                if (formFile.ContentType.ToLower() != "image/jpeg") //not text file..
                 {
-                    return BadRequest("The " + formFile.FileName + " unable to upload because uploaded file must be a text file");
+                    return BadRequest("The " + formFile.FileName + " unable to upload because uploaded file must be a jpg file");
                 }
                 if (formFile.Length == 0)
                 {
                     return BadRequest("The " + formFile.FileName + "file is empty content!");
                 }
-                else if (formFile.Length > 1048576)
+                else if (formFile.Length > 5242880)
                 {
-                    return BadRequest("The " + formFile.FileName + "file is exceed 1 MB !");
+                    return BadRequest("The " + formFile.FileName + "file is exceed 5 MB !");
                 }
                 else
                 {
                     if (formFile.Length > 0)
                     {
-                        filePath = "C:\\Users\\ASUS\\Desktop\\Uploadtest" + i + ".txt"; //UPLOAD TO A LOCATION
+                        filePath = "C:\\Users\\ASUS\\Desktop\\ImageMenu" + i + ".jpg"; //UPLOAD TO A LOCATION
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             await formFile.CopyToAsync(stream);

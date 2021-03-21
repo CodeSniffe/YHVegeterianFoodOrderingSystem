@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Upload</h2>
+<h2>Upload Image</h2>
 
 <div class="row">
     <section>
@@ -13,20 +13,27 @@
               asp-controller="UploadFiles" asp-action="Index">
             <div class="form-group">
                 <div class="col-md-10">
-                    <p>Upload one or more files using this form:</p>
+                    <p>Please choose <b>at least one</b> file to upload!</p>
                     <input type="file" name="files" multiple />
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input type="submit" value="Upload" />
+                    <input type="submit" value="Upload File" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <p>Warning: Images uploaded to blob will overwrite the existing images in the blob!!</p>
+                    <br/>
+                    <a asp-controller="Blobs" asp-action="UploadMultipleImages">Move Uploaded File To Blob</a>
                 </div>
             </div>
         </form>
     </section>
 </div>
 
-@if(ViewBag.content != null)
+@if (ViewBag.content != null)
 {
     <script>alert("@ViewBag.content");</script>
 }
