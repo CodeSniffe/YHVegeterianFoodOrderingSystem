@@ -1,86 +1,194 @@
-﻿@model IEnumerable<YHVegeterianFoodOrderingSystem.Models.Menu>
+﻿@model PurchaseHistory;
 
 @{
     ViewData["Title"] = "Index";
 }
 
+<script src="~/js/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnAddToList").click(function () {
+            AddToList();
+        });
+
+        $("input[type=number]").change(function () {
+            CalculateSubTotal();
+        });
+    });
+
+    function CalculateSubTotal() {
+        var UnitPrice = $("#txtUnitPrice").val();
+        var Quantity = $("#txtQuantity").val();
+
+        var Total = UnitPrice * Quantity;
+
+        $("#txtTotal").val(parseFloat(Total).toFixed(2));
+    }
+
+    function RemoveItem(FoodID) {
+        $(FoodID).closest('tr').remove();
+    }
+
+    function AddToList() {
+        var tblItemList = $("#tblOrderItemList");
+        var CustomerName = $("#txtCustomerName").val();
+        var FoodID = $("#FoodDDL").val();
+        var FoodName = $("#FoodDDL option:selected").text();
+        var UnitPrice = $("#txtUnitPrice").val();       
+        var Quantity = $("#txtQuantity").val();
+        var Total = $("#txtTotal").val();
+        var ItemList = "<tr><td hidden>" +
+            FoodID +
+            "</td><td>" +
+            CustomerName +
+            "</td><td>" +
+            FoodName +
+            "</td><td>" +
+            parseFloat(UnitPrice).toFixed(2) +
+            "</td><td>" +
+            Quantity +
+            "</td><td>" +
+            parseFloat(Total).toFixed(2) +
+            "</td><td> <input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='RemoveItem(this)'/> </tr></tr>";
+
+        if ($("#txtCustomerName").val() == "") {
+            alert("Please enter your name first!");
+        }
+        else {
+            if ($("#txtTotal").val() == 0.00) {
+                alert("Please select at least one food!");
+            }
+            else {
+                tblItemList.append(ItemList);
+                FinalItemTotal();
+                ResetItem();
+            }
+        }
+    }
+
+    function FinalItemTotal() {
+        $("#txtFinalTotal").val("0.00");
+        var FinalTotal = 0.00;
+
+        $("#tblOrderItemList").find("tr:gt(0)").each(function () {
+            var Total = parseFloat($(this).find("td:eq(5)").text());
+            FinalTotal += Total;
+        });
+
+        $("#txtFinalTotal").val(parseFloat(FinalTotal).toFixed(2));
+    }
+
+    function ResetItem() {
+        $("#FoodID").val(0);
+        $("#txtQuantity").val(0);
+        $("#txtTotal").val(0.00);
+    }
+</script>
+
 <h1>Food Menu</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table" id="MenuTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FoodName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FoodImagePath)
-            </th>
-            <th>
-                Quantity (Max: 10)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodImagePath)
-            </td>
-            <td>
-                <input type="number" name="Quantity" value="0" min="0" max="10">
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    fieldset{
+        border: 1px solid #ddd !important;
+        margin: 0;
+        xmin-width: 0;
+        padding: 10px;
+        position: relative;
+        boder-radius: 4px;
+        background-color: #f5f5f5;
+        padding-left: 10px !important;
+    }
 
-<form asp-action="AddToCart" method="post">
-    <div class="form-group">
-        Food Name:
-        @Html.DropDownList("FoodName")  
-    </div>
-    <div class="form-group">
-        Unit Price:
-        <input type="text" readonly="readonly" name="UnitPrice" value=@ViewBag.UnitPrice />
-    </div>
-    <div class="form-group">
-        Quantity:
-        <input type="number" name="Quantity" value="0" min="0" max="10"/>
-    </div>
-    <div class="form-group">
-        Total:
-        <input type="text" readonly="readonly" name="Total" value="0.00" />
-    </div>
-    <div class="form-group">
-        <input type="button" name="AddToList" value="Add To List" />
-    </div>
-</form>
+    legend{
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        width: 35%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 5px 5px 10px;
+        background-color: #ffffff;
+    }
+</style>
 
 <fieldset>
-    <legend>Restaurant List Items</legend>
-    <table width="100%">
+    <legend>
+        Personal Details
+    </legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                Customer Name:
+                <input asp-for="CustomerName" type="text" id="txtCustomerName" name="CustomerName" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                Total Payment:
+                <input style="text-align: right" type="text" value="0.00" name="FinalTotal" readonly="readonly" id="txtFinalTotal"/>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<br />
+<fieldset>
+    <legend>
+        Food Details
+    </legend>
+    @using (Html.BeginForm("Create", "PurchaseHistory", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    Food Name:
+                    @Html.DropDownList("FoodDDL", new SelectList(ViewBag.FoodName), new { @class = "form-group" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    Unit Price:
+                    <input style="text-align: right" type="text" readonly="readonly" id="txtUnitPrice" name="UnitPrice" value="5.50" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    Quantity:
+                    <input asp-for="Quantity" type="number" id="txtQuantity" name="Quantity" value="0" min="0" max="10" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    Total:
+                    <input asp-for="TotalPrice" style="text-align: right" type="text" id="txtTotal" readonly="readonly" name="Total" value="0.00" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="make">
+                    <input type="submit" value="Order Food" name="AddToList" id="btnAddToList" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</fieldset>
+<br />
+<fieldset>
+    <legend>Order List Items</legend>
+    <table width="100%", id="tblOrderItemList">
         <thead>
             <tr>
                 <th hidden>
-                    Food ID
+                    Order ID
+                </th>
+                <th>
+                    Customer Name
                 </th>
                 <th>
                     Food Name
@@ -101,3 +209,4 @@
         </thead>
     </table>
 </fieldset>
+<br />

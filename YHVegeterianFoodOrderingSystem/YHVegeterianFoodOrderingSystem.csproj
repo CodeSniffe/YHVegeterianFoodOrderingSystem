@@ -9,6 +9,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\YHVegeterianFoodOrderingSystemContextNewMigrations\20210311122145_PurchaseHistoryTable.cs" />
     <Compile Remove="Migrations\YHVegeterianFoodOrderingSystemContextNewMigrations\20210311122145_PurchaseHistoryTable.Designer.cs" />
+    <Compile Remove="Migrations\YHVegeterianFoodOrderingSystemContextNewMigrations\20210321074757_PurchaseHistoryTable.cs" />
+    <Compile Remove="Migrations\YHVegeterianFoodOrderingSystemContextNewMigrations\20210321074757_PurchaseHistoryTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\jquery-3.6.0.min.js" />
   </ItemGroup>
 
   <ItemGroup>

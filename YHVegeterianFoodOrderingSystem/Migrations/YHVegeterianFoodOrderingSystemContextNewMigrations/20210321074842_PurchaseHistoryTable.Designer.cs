@@ -9,7 +9,7 @@ using YHVegeterianFoodOrderingSystem.Data;
 namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSystemContextNewMigrations
 {
     [DbContext(typeof(YHVegeterianFoodOrderingSystemContextNew))]
-    [Migration("20210311122421_PurchaseHistoryTable")]
+    [Migration("20210321074842_PurchaseHistoryTable")]
     partial class PurchaseHistoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,10 +45,8 @@ namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSyst
 
             modelBuilder.Entity("YHVegeterianFoodOrderingSystem.Models.PurchaseHistory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");

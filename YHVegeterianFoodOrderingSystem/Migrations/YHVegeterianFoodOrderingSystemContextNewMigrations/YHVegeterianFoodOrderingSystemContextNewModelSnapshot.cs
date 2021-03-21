@@ -43,10 +43,8 @@ namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSyst
 
             modelBuilder.Entity("YHVegeterianFoodOrderingSystem.Models.PurchaseHistory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");

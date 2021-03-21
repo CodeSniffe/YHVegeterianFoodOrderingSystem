@@ -9,7 +9,7 @@ namespace YHVegeterianFoodOrderingSystem.Models
 {
     public class PurchaseHistory
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string CustomerName { get; set; }
         public string PurchasedFood { get; set; }
         public string Quantity { get; set; }

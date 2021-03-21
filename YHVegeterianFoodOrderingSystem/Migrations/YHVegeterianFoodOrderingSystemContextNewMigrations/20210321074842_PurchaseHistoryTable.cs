@@ -10,8 +10,7 @@ namespace YHVegeterianFoodOrderingSystem.Migrations.YHVegeterianFoodOrderingSyst
                 name: "PurchaseHistory",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     CustomerName = table.Column<string>(nullable: true),
                     PurchasedFood = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),

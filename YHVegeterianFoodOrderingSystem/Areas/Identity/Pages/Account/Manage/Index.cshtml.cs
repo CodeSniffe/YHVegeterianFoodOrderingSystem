@@ -66,7 +66,6 @@ namespace YHVegeterianFoodOrderingSystem.Areas.Identity.Pages.Account.Manage
                 FullName = user.FullName,
                 Address = user.Address,
                 DOB = user.DOB
-
             };
         }
 
