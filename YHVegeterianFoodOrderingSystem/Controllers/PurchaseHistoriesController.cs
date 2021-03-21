@@ -43,7 +43,6 @@ namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
             return View(purchaseHistory);
         }
 
-<<<<<<< HEAD
         // GET: PurchaseHistories/Create
         public IActionResult Create()
         {
@@ -87,7 +86,7 @@ namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,CustomerName,PurchasedFood,Quantity,TotalPrice")] PurchaseHistory purchaseHistory)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,PurchasedFood,Quantity,TotalPrice")] PurchaseHistory purchaseHistory)
         {
             if (id != purchaseHistory.Id)
             {
@@ -116,8 +115,6 @@ namespace YHVegeterianFoodOrderingSystem.Views.PurchaseHistories
             }
             return View(purchaseHistory);
         }
-=======
->>>>>>> 2c11178b1253c074026dedd5024b3ab5a02f6054
 
         // GET: PurchaseHistories/Delete/5
         public async Task<IActionResult> Delete(string? id)
